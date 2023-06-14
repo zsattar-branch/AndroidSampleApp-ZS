@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -24,6 +25,11 @@ import com.example.buynow.data.local.room.ProductEntity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.branch.indexing.BranchUniversalObject
+import io.branch.referral.Branch
+import io.branch.referral.BranchError
+import io.branch.referral.util.ContentMetadata
+import io.branch.referral.util.LinkProperties
 import java.io.IOException
 
 class ProductDetailsActivity : AppCompatActivity() {
@@ -40,6 +46,8 @@ class ProductDetailsActivity : AppCompatActivity() {
     lateinit var productDes_ProductDetailsPage: TextView
     lateinit var RatingProductDetails: TextView
     lateinit var productRating_singleProduct: RatingBar
+    lateinit var ShareLink: Button
+
 
 
 
@@ -78,6 +86,30 @@ class ProductDetailsActivity : AppCompatActivity() {
         val addToCart_ProductDetailsPage: Button = findViewById(R.id.addToCart_ProductDetailsPage)
         val shippingAddress_productDetailsPage:LinearLayout = findViewById(R.id.shippingAddress_productDetailsPage)
         val cardNumberProduct_Details:TextView = findViewById(R.id.cardNumberProduct_Details)
+
+        ShareLink=findViewById(R.id.share_button)
+        ShareLink.setOnClickListener {
+            val buo = BranchUniversalObject()
+                .setCanonicalIdentifier("content/12345")
+                .setTitle(productName_ProductDetailsPage.toString())
+                .setContentDescription("My Content Description")
+                .setContentImageUrl("")
+                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                .setContentMetadata(ContentMetadata().addCustomMetadata("SampleValue", "value1"))
+
+            val lp = LinkProperties()
+                .setChannel("Test")
+                .setFeature("Services")
+                .setCampaign("Training")
+
+            buo.generateShortUrl(this,lp, Branch.BranchLinkCreateListener { url, error ->
+                if (url == null) {
+                    Log.i("branch SDK", "Branch Link" + url)
+                }
+            })
+        }
+
 
         cardNumber = GetDefCard()
 
