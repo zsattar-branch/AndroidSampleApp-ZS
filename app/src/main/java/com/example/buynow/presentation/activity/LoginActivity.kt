@@ -15,6 +15,8 @@ import com.example.buynow.R
 import com.example.buynow.utils.Extensions.toast
 import com.example.buynow.utils.FirebaseUtils.firebaseAuth
 import com.example.buynow.presentation.LoadingDialog
+import io.branch.referral.Branch
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Branch.getInstance().setIdentity("user_id");
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
