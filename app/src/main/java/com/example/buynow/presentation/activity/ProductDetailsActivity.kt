@@ -30,6 +30,11 @@ import io.branch.referral.Branch
 import io.branch.referral.BranchError
 import io.branch.referral.util.ContentMetadata
 import io.branch.referral.util.LinkProperties
+import io.branch.referral.QRCode.BranchQRCode
+import io.branch.referral.QRCode.BranchQRCode.BranchQRCodeImageHandler
+import java.lang.Exception
+import android.graphics.Bitmap
+import android.graphics.Color
 import java.io.IOException
 
 class ProductDetailsActivity : AppCompatActivity() {
@@ -47,6 +52,8 @@ class ProductDetailsActivity : AppCompatActivity() {
     lateinit var RatingProductDetails: TextView
     lateinit var productRating_singleProduct: RatingBar
     lateinit var ShareLink: Button
+    lateinit var QRCode: Button
+
 
 
 
@@ -110,6 +117,36 @@ class ProductDetailsActivity : AppCompatActivity() {
             })
         }
 
+        QRCode=findViewById(R.id.qr_code)
+        QRCode.setOnClickListener {
+            val qrCode = BranchQRCode()
+                .setCodeColor("#c63939")
+                .setBackgroundColor(Color.blue)
+                .setMargin(1)
+                .setWidth(512)
+                .setImageFormat(BranchQRCode.BranchImageFormat.JPEG)
+                .setCenterLogo("https://cdn.branch.io/branch-assets/1598575682753-og_image.png")
+
+            val buo = BranchUniversalObject()
+                .setCanonicalIdentifier("content/12345")
+                .setTitle("My Content Title")
+                .setContentDescription("My Content Description")
+                .setContentImageUrl("https://lorempixel.com/400/400")
+
+            val lp= LinkProperties()
+                .setChannel("facebook")
+                .setFeature("sharing")
+                .setCampaign("content 123 launch")
+                .setStage("new user")
+
+            qrCode.getQRCodeAsImage(this, buo,lp,object : BranchQRCodeImageHandler<Any?>{
+                override fun onSuccess(qrCodeImage: Bitmap) {}
+                override fun onFailure(e: Exception?) {
+                    Log.d("Failed", e.toString())
+                }
+            })
+
+        }
 
         cardNumber = GetDefCard()
 

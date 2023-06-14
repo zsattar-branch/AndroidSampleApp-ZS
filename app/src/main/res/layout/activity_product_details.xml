@@ -157,6 +157,17 @@
                     android:textSize="13sp" />
 
 
+
+
+                <Button
+                    android:id="@+id/qr_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Get QR Code"/>
+
                 <Button
                     android:id="@+id/share_button"
                     android:layout_width="wrap_content"
@@ -165,6 +176,15 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:text="Share Link"/>
+
+                <Button
+                    android:id="@+id/push_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="push notification "/>
 
 
                 <LinearLayout
