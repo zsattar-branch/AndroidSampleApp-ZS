@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
 
         signInBtn.setOnClickListener {
             checkInput()
-
+            Branch.getInstance().setIdentity("User_name");
 
         }
 
