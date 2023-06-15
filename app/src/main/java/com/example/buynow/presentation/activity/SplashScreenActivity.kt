@@ -50,6 +50,8 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         Branch.getInstance().setRequestMetadata("\$marketing_cloud_visitor_id", "User12345")
+        Branch.enableCookieBasedMatching(null)
+
         Branch.sessionBuilder(this).withCallback { branchUniversalObject, linkProperties, error ->
             if (error != null) {
                 Log.e("BranchSDK_Tester", "branch init failed. Caused by -" + error.message)
